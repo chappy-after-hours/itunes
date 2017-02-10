@@ -29,14 +29,20 @@ angular.module('itunes').controller('mainCtrl', function($scope, itunesService){
 
     //Code here
   $scope.getSongData = function() {
+    sessionStorage.removeItem('recentSearch');
     console.log(2)
     itunesService.searchArtist($scope.artist)
     .then(function(data){
       console.log(2.1)
       $scope.songData = data;
+      sessionStorage.setItem('recentSearch', JSON.stringify(data))
       console.log(data)
     })
     $scope.artist = '';
+  }
+
+  if (sessionStorage.getItem('recentSearch')) {
+    $scope.songData = JSON.parse(sessionStorage.getItem('recentSearch'))
   }
 
 
